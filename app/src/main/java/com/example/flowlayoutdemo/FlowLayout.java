@@ -104,38 +104,20 @@ public class FlowLayout extends ViewGroup {
                         getPaddingLeft() + childWidth - lp.rightMargin,
                         getPaddingTop() + height + childHeight - lp.bottomMargin));
             } else {  //不换行
-                if (i==4){
-                    childNum = childNum + 1;
-                    lp.leftMargin =(widthSize - getPaddingLeft() - getPaddingRight())/2;
+                childNum = childNum + 1;
+                lp.leftMargin =(widthSize - getPaddingLeft() - getPaddingRight())/2;
 
-                    Log.e("GGG","运行了几次呢");
-                    //记录位置
-                    mChildPos.add(new ChildPos(
-                            getPaddingLeft() + lp.leftMargin,
-                            getPaddingTop()+ height  + lp.topMargin,
-                            getPaddingLeft() + childWidth - lp.rightMargin,
-                            getPaddingTop() + height  + childHeight - lp.bottomMargin));
+                //记录位置
+                mChildPos.add(new ChildPos(
+                        getPaddingLeft() + lp.leftMargin,
+                        getPaddingTop() + height + lp.topMargin,
+                        getPaddingLeft() + childWidth - lp.rightMargin,
+                        getPaddingTop() + height + childHeight - lp.bottomMargin));
 
-                    //叠加子View宽度得到新行宽度
-                    lineWidth = lineWidth + childWidth;
-                    //取当前行子View最大高度作为行高度
-                    lineHeight = Math.max(lineHeight, childHeight);
-                }else {
-                    childNum = childNum + 1;
-                    lp.leftMargin =(widthSize - getPaddingLeft() - getPaddingRight())/2;
-
-                    //记录位置
-                    mChildPos.add(new ChildPos(
-                            getPaddingLeft() + lp.leftMargin,
-                            getPaddingTop() + height + lp.topMargin,
-                            getPaddingLeft() + childWidth - lp.rightMargin,
-                            getPaddingTop() + height + childHeight - lp.bottomMargin));
-
-                    //叠加子View宽度得到新行宽度
-                    lineWidth = lineWidth + childWidth;
-                    //取当前行子View最大高度作为行高度
-                    lineHeight = Math.max(lineHeight, childHeight);
-                }
+                //叠加子View宽度得到新行宽度
+                lineWidth = lineWidth + childWidth;
+                //取当前行子View最大高度作为行高度
+                lineHeight = Math.max(lineHeight, childHeight);
 
 
 
@@ -171,6 +153,11 @@ public class FlowLayout extends ViewGroup {
             View child = getChildAt(i);
             ChildPos pos = mChildPos.get(i);
             //设置View的左边、上边、右边底边位置
+            if (i==1){
+                Log.e("HHH1","pos.top:"+pos.top +"   pos.bottom"+ pos.bottom);
+            }else if(i==2){
+                Log.e("HHH2","pos.top:"+pos.top +"   pos.bottom"+ pos.bottom);
+            }
             child.layout(pos.left, pos.top, pos.right, pos.bottom);
 
         }

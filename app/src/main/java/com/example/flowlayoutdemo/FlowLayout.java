@@ -98,6 +98,8 @@ public class FlowLayout extends ViewGroup {
                 //重置行高度为第一个View的高度
                 lineHeight = childHeight;
                 //记录位置
+                Log.e("HHH","padding"+getPaddingTop());
+                Log.e("HHH","margintop"+lp.topMargin);
                 mChildPos.add(new ChildPos(
                         getPaddingLeft() + lp.leftMargin,
                         getPaddingTop() + height + lp.topMargin,
@@ -105,13 +107,13 @@ public class FlowLayout extends ViewGroup {
                         getPaddingTop() + height + childHeight - lp.bottomMargin));
             } else {  //不换行
                 childNum = childNum + 1;
-                lp.leftMargin =(widthSize - getPaddingLeft() - getPaddingRight())/2;
+                int left =(widthSize - getPaddingLeft() - getPaddingRight())/2;
 
                 //记录位置
                 mChildPos.add(new ChildPos(
-                        getPaddingLeft() + lp.leftMargin,
+                        getPaddingLeft() + lp.leftMargin+left,
                         getPaddingTop() + height + lp.topMargin,
-                        getPaddingLeft() + childWidth - lp.rightMargin,
+                        getPaddingLeft() + childWidth - lp.rightMargin+left,
                         getPaddingTop() + height + childHeight - lp.bottomMargin));
 
                 //叠加子View宽度得到新行宽度
@@ -153,6 +155,8 @@ public class FlowLayout extends ViewGroup {
             View child = getChildAt(i);
             ChildPos pos = mChildPos.get(i);
             //设置View的左边、上边、右边底边位置
+            TextView view=(TextView)child;
+            Log.e("BBB","文字是"+view.getText().toString());
             if (i==1){
                 Log.e("HHH1","pos.top:"+pos.top +"   pos.bottom"+ pos.bottom);
             }else if(i==2){

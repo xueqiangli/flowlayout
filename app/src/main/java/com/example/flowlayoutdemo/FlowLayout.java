@@ -80,6 +80,7 @@ public class FlowLayout extends ViewGroup {
             MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
             //子view占据的宽度
             int childWidth = child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin;
+
             //子view占据的高度
             int childHeight = child.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
 

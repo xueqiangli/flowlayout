@@ -1,20 +1,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
-    <com.example.flowlayoutdemo.FlowLayout
-        android:id="@+id/flow_layout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="10dp" >
-    </com.example.flowlayoutdemo.FlowLayout>
+        android:layout_height="300dp"
+        android:scrollbars="none">
+
+        <com.example.flowlayoutdemo.FlowLayout
+            android:id="@+id/flow_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"></com.example.flowlayoutdemo.FlowLayout>
+
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/edit"

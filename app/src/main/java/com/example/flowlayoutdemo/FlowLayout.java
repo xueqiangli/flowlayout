@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * @author storm 93084
- * @description:
+ * @description: 不可滑动的流式布局
  * @date :2021/5/26 10:40
  */
 public class FlowLayout extends ViewGroup {
@@ -88,7 +88,7 @@ public class FlowLayout extends ViewGroup {
 
             int halfScreen=widthSize - getPaddingLeft() - getPaddingRight();
             //换行
-            if (lineWidth>halfScreen/2|| childNum > 0) {
+            if (i==0||lineWidth>halfScreen/2|| childNum > 0) {
                 childNum = 0;
                 //取最大的行宽为流式布局宽度
                 width = Math.max(width, lineWidth);

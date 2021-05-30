@@ -75,8 +75,9 @@ public class FlowLayout extends ViewGroup {
         for (int i = 0; i < count; i++) {
             //获取对应索引的view
             View child = getChildAt(i);
+
             //测量子view的宽和高
-            measureChild(child, widthMeasureSpec, heightMeasureSpec);
+            measureChildWithMargins(child, widthMeasureSpec,0, heightMeasureSpec,0);
             MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
             //子view占据的宽度
             int childWidth = child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin;

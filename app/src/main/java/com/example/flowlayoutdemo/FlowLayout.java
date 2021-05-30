@@ -4,10 +4,14 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.Scroller;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,10 +143,14 @@ public class FlowLayout extends ViewGroup {
             }
         }
 
+
+
         setMeasuredDimension(
                 widthMode == MeasureSpec.EXACTLY ? widthSize : width + getPaddingLeft() + getPaddingRight(),
                 heightMode == MeasureSpec.EXACTLY ? heightSize : height + getPaddingTop() + getPaddingBottom());
     }
+
+
 
     /**
      * 让ViewGroup能够支持margin属性
@@ -167,4 +175,5 @@ public class FlowLayout extends ViewGroup {
 
         }
     }
+
 }

@@ -1,6 +1,7 @@
 package com.example.flowlayoutdemo;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,7 @@ import java.util.List;
 public class FlowLayout extends ViewGroup {
     //记录每个View的位置
     private List<ChildPos> mChildPos = new ArrayList<ChildPos>();
+    private int flowColumns=2;//默认单列和两列，默认为两列
 
     private class ChildPos {
         int left, top, right, bottom;
@@ -48,6 +50,9 @@ public class FlowLayout extends ViewGroup {
      */
     public FlowLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.FlowLayout);
+        flowColumns=a.getInt(R.styleable.FlowLayout_flow_columns,2);
+        a.recycle();
     }
 
     /**
@@ -88,9 +93,9 @@ public class FlowLayout extends ViewGroup {
             TextView textView=(TextView) child;
             Log.e("BBB","值是"+textView.getText().toString());
 
-            int halfScreen=widthSize - getPaddingLeft() - getPaddingRight();
+            int maxWidth=widthSize - getPaddingLeft() - getPaddingRight();
             //换行
-            if (i==0||lineWidth+childWidth>halfScreen|| childNum > 0) {
+            if (i==0||lineWidth>maxWidth/flowColumns||childWidth>maxWidth/flowColumns|| childNum == flowColumns-1) {
                 childNum = 0;
                 //取最大的行宽为流式布局宽度
                 width = Math.max(width, lineWidth);
@@ -101,8 +106,6 @@ public class FlowLayout extends ViewGroup {
                 //重置行高度为第一个View的高度
                 lineHeight = childHeight;
                 //记录位置
-                Log.e("HHH","padding"+getPaddingTop());
-                Log.e("HHH","margintop"+lp.topMargin);
                 mChildPos.add(new ChildPos(
                         getPaddingLeft() + lp.leftMargin,
                         getPaddingTop() + height + lp.topMargin,
@@ -111,7 +114,8 @@ public class FlowLayout extends ViewGroup {
             } else {  //不换行
                 childNum = childNum + 1;
 
-                int left =(widthSize - getPaddingLeft() - getPaddingRight())/2;
+
+                int left =(widthSize - getPaddingLeft() - getPaddingRight())/flowColumns;
 
                 //记录位置
                 mChildPos.add(new ChildPos(

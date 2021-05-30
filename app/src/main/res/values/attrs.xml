@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FlowLayout">
+        <attr name="flow_columns" format="enum">
+            <enum name="one" value="1" />
+            <enum name="two" value="2" />
+        </attr>
+    </declare-styleable>
+</resources>

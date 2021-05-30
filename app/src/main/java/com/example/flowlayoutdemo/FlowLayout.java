@@ -90,7 +90,7 @@ public class FlowLayout extends ViewGroup {
 
             int halfScreen=widthSize - getPaddingLeft() - getPaddingRight();
             //换行
-            if (i==0||lineWidth>halfScreen/2|| childNum > 0) {
+            if (i==0||lineWidth+childWidth>halfScreen|| childNum > 0) {
                 childNum = 0;
                 //取最大的行宽为流式布局宽度
                 width = Math.max(width, lineWidth);
@@ -159,13 +159,6 @@ public class FlowLayout extends ViewGroup {
             View child = getChildAt(i);
             ChildPos pos = mChildPos.get(i);
             //设置View的左边、上边、右边底边位置
-            TextView view=(TextView)child;
-            Log.e("BBB","文字是"+view.getText().toString());
-            if (i==1){
-                Log.e("HHH1","pos.top:"+pos.top +"   pos.bottom"+ pos.bottom);
-            }else if(i==2){
-                Log.e("HHH2","pos.top:"+pos.top +"   pos.bottom"+ pos.bottom);
-            }
             child.layout(pos.left, pos.top, pos.right, pos.bottom);
 
         }

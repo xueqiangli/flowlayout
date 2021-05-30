@@ -17,9 +17,14 @@
     </ScrollView>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="20dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="添加" />
 
         <EditText
             android:id="@+id/edit"
@@ -28,11 +33,21 @@
             android:layout_weight="1"
             android:hint="请输入新标签名称" />
 
-        <Button
-            android:id="@+id/btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="添加" />
+
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <Button
+
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="添加" />
+
+
+
+
+    </LinearLayout>
 </LinearLayout>

@@ -4,22 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <ScrollView
+    <com.example.flowlayoutdemo.FlowLayout
+        android:id="@+id/flow_layout"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:scrollbars="none">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
 
-        <com.example.flowlayoutdemo.FlowLayout
-            android:id="@+id/flow_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:flow_columns="two">
-
-        </com.example.flowlayoutdemo.FlowLayout>
-
-    </ScrollView>
+    </com.example.flowlayoutdemo.FlowLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">

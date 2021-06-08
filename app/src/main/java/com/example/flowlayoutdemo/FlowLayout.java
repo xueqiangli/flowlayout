@@ -3,10 +3,12 @@ package com.example.flowlayoutdemo;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
@@ -25,6 +27,15 @@ public class FlowLayout extends ViewGroup {
     //记录每个View的位置
     private List<ChildPos> mChildPos = new ArrayList<ChildPos>();
     private int flowColumns=2;//默认单列和两列，默认为两列
+    private Scroller scroller;
+    private int mLastX=0;
+    private int mLastY=0;
+    private int height=0;//流布局的最终高度
+    /**
+     * 屏幕的高度
+     */
+    private int mScreenHeight;
+
 
     private class ChildPos {
         int left, top, right, bottom;
@@ -57,7 +68,81 @@ public class FlowLayout extends ViewGroup {
         TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.FlowLayout);
         flowColumns=a.getInt(R.styleable.FlowLayout_flow_columns,2);
         a.recycle();
+
+
+        scroller=new Scroller(context);
+
+        /**
+         * 获得屏幕的高度
+         */
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(outMetrics);
+        mScreenHeight = outMetrics.heightPixels;
     }
+
+    //缓慢滑动到指定位置
+    public void smoothScrollTo(int destX,int destY){
+        int scrollx=getScrollX();
+        int scrolly=getScrollY();
+        int deltax=destX-scrollx;
+        int deltaY=destY-scrolly;
+        scroller.startScroll(0,scrolly,0,destY,1000);
+        invalidate();
+    }
+
+    @Override
+    public void computeScroll() {
+        if (scroller.computeScrollOffset()){
+            scrollTo(scroller.getCurrX(),scroller.getCurrY());
+            postInvalidate();
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int x= (int) event.getX();
+        int y= (int) event.getY();
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                mLastY=y;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                int deltaY=mLastY-y;
+                // 边界值检查
+                int scrollY = getScrollY();
+                // 已经到达顶端，下拉多少，就往上滚动多少
+                if (deltaY<0 && scrollY+deltaY<0){
+                    deltaY=-scrollY;
+                }
+                //已经到底部，上拉多少，就往下滚动多少
+
+                if (deltaY>0&&scrollY+deltaY>height-mScreenHeight){
+                    deltaY=height-mScreenHeight+200-scrollY;
+                }
+                scrollBy(0,deltaY);
+                mLastY=y;
+                break;
+            case MotionEvent.ACTION_UP:
+                //smoothScrollTo(x,y-mLastY);
+                mLastX=x;
+                //mLastY=y;
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
+    public boolean isSlideToBottom() {
+        if (computeVerticalScrollExtent() + computeVerticalScrollOffset()
+                >= computeVerticalScrollRange())
+            return true;
+        return false;
+    }
+
+
+
 
     /**
      * 测量宽度和高度
@@ -72,7 +157,8 @@ public class FlowLayout extends ViewGroup {
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 
         //使用wrap_content的流式布局的最终宽度和高度
-        int width = 0, height = 0;
+        int width = 0;
+        height = 0;
         //记录每一行的宽度和高度
         int lineWidth = 0, lineHeight = 0;
         //得到内部元素的个数
@@ -142,6 +228,8 @@ public class FlowLayout extends ViewGroup {
                 height += lineHeight;
             }
         }
+
+        Log.e("BBB","高度"+height);
 
 
 

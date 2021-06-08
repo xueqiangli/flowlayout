@@ -116,9 +116,8 @@ public class FlowLayout extends ViewGroup {
                     deltaY=-scrollY;
                 }
                 //已经到底部，上拉多少，就往下滚动多少
-
                 if (deltaY>0&&scrollY+deltaY>height-mScreenHeight){
-                    deltaY=height-mScreenHeight+200-scrollY;
+                    deltaY=height-mScreenHeight-scrollY;
                 }
                 scrollBy(0,deltaY);
                 mLastY=y;
@@ -134,12 +133,7 @@ public class FlowLayout extends ViewGroup {
         return true;
     }
 
-    public boolean isSlideToBottom() {
-        if (computeVerticalScrollExtent() + computeVerticalScrollOffset()
-                >= computeVerticalScrollRange())
-            return true;
-        return false;
-    }
+
 
 
 
@@ -203,7 +197,6 @@ public class FlowLayout extends ViewGroup {
                         getPaddingTop() + height + childHeight - lp.bottomMargin));
             } else {  //不换行
                 childNum = childNum + 1;
-
 
                 int left =(widthSize - getPaddingLeft() - getPaddingRight())/flowColumns;
 
